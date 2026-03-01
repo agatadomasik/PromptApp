@@ -1,0 +1,17 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.db
+
+# Node / React
+node_modules/
+dist/
+build/
+
+# VS Code
+.vscode/
+
+# Docker
+*.log

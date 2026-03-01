@@ -1,0 +1,48 @@
+services:
+  promptapp:
+    build:
+      context: ./PromptApp
+    ports:
+      - "5001:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+    volumes:
+      - sqlite_data:/app/data
+
+  promptappworker:
+    build:
+      context: .
+      dockerfile: PromptAppWorker/Dockerfile
+    ports:
+      - "5002:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+    volumes:
+      - sqlite_data:/app/data
+
+  frontend:
+    build:
+      context: ./PromptAppFrontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - promptapp
+      - promptappworker
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
+volumes:
+  sqlite_data:

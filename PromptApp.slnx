@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PromptApp/PromptApp.csproj" />
+  <Project Path="PromptAppWorker/PromptAppWorker.csproj" Id="1d2283d3-6fd4-4865-b121-8de6b78a422c" />
+</Solution>
